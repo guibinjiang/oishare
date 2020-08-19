@@ -5,6 +5,18 @@ use Core\BaseObject;
 
 class HttpRequestProxy
 {
+    public $get;
+
+    public $post;
+
+    public $request;
+
+    public $server;
+
+    public $header;
+
+    public $cookie;
+
     public function __construct()
     {
         $this->get = $_GET;

@@ -2,12 +2,17 @@
 
 namespace App\Demo\Logic;
 
+use App\Demo\Model\UserModel;
+use Core\Base\CoSingle;
 use Core\Base\Logic;
 
 class TestLogic extends Logic
 {
     public function Test()
     {
-        return 'guibin';
+        /** @var $userModel UserModel */
+        $userModel = CoSingle::getInstance(UserModel::class);
+        $list = $userModel->getConn()->getAll();
+        return $list;
     }
 }

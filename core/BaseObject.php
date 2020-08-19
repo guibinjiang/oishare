@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Base\CoSingle;
+
 class BaseObject
 {
 

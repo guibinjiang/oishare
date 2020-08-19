@@ -25,7 +25,8 @@ class WebServer extends SwooleBase
      */
     public function onProcess($request, $response)
     {
-        if ($request->server['path_info'] == '/favicon.ico' || $request->server['request_uri'] == '/favicon.ico') {
+        if ((isset($request->server['path_info']) && $request->server['path_info'] == '/favicon.ico')
+            || (isset($request->server['request_uri']) && $request->server['request_uri'] == '/favicon.ico')) {
             $response->end();
         }
 

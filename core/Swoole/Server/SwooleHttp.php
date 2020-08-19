@@ -24,7 +24,6 @@ class SwooleHttp extends SwooleBase
             'reload_async'      => $this->setting['reload_async'],
         ]);
         $this->server->on('Start'       , [$this, 'onStart']);
-        $this->server->on('Connect'     , [$this, 'onConnect']);
         $this->server->on('WorkerStart' , [$this, 'onWorkerStart']);
         $this->server->on('ManagerStart', [$this, 'onManagerStart']);
         $this->server->on('WorkerStop'  , [$this, 'onWorkerStop']);
@@ -32,7 +31,6 @@ class SwooleHttp extends SwooleBase
         $this->server->on('Task'        , [$this, 'onTask']);
         $this->server->on('Finish'      , [$this, 'onFinish']);
         $this->server->on('Shutdown'    , [$this, 'onShutdown']);
-        $this->server->on('Close'       , [$this, 'onClose']);
 
         $this->server->start();
     }
