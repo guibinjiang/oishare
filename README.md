@@ -1,3 +1,0 @@
-# oishare
-jiangguibin
-guibin test
