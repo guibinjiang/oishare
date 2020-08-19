@@ -18,7 +18,7 @@ return [
     'tcp' => [
         'host'                  => '0.0.0.0',           //ip地址
         'port'                  => 9502,                //端口
-        'process_name'          => 'OIServerPRC',       //swoole 进程名称
+        'process_name'          => 'OIServerTCP',       //swoole 进程名称
         'worker_num'            => 1,                   //一般设置为服务器CPU数的1-4倍
         'task_worker_num'       => 1,                   //task进程的数量
         'task_ipc_mode'         => 3,                   //使用消息队列通信，并设置为争抢模式

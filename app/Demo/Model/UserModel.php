@@ -14,6 +14,9 @@ class UserModel extends Model
 
     public function getDBFactory()
     {
+        if (defined('ServerModel') && ServerModel == 'WEB') {
+            $this->useCoroutine = false;
+        }
         return parent::getDBFactory();
     }
 }
