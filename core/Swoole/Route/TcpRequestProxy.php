@@ -1,7 +1,7 @@
 <?php
 namespace Core\Swoole\Route;
 
-use Core\Tool\TcpClient;
+use Core\Client\TcpClient;
 
 class TcpRequestProxy
 {
@@ -20,6 +20,7 @@ class TcpRequestProxy
     public function __construct($params = '')
     {
         $params = TcpClient::decode($params, TcpClient::DECODE_JSON);
+        print_r($params);
         $this->get = $params;
         $this->post = $params;
         $this->request = $params;

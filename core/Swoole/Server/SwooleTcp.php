@@ -54,6 +54,7 @@ class SwooleTcp extends SwooleBase
         try {
             $route = new Route($requestManager, $responseManager);
             $return = $route->execute();
+            $return['env']['requestId'] = $request->get['env']['requestId'];
             $responseManager->end($return);
         } catch (\Exception $exc) {
             $responseManager->end($exc);
