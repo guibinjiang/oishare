@@ -10,8 +10,6 @@ define('CONSTS_PATH',           __DIR__ . '/consts/');
 
 define('DEV_ENV', 'local');
 
-ini_set('display_errors', true);
-
 require_once CORE_PATH . '/Bootstrap.php';
 
 $app = new Core\Swoole\Server();
