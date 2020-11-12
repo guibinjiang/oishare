@@ -1,108 +1,77 @@
 <?php
 /**************************Start Function****************************/
 
-/**
- * 打印进程执行步骤
- * @param null $thread 线程号
- * @param bool $exit 是否退出
- * @return void
- */
-function debugBacktrace($thread = null, $exit = false) {
-    static $staticThread = null;
-    if ($thread && !isset($staticThread)) {
-        $staticThread = $thread;
-    } elseif ($thread === null || ($thread && $thread == $staticThread)) {
-        $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 5);
-        $data = array();
-        foreach ($backtrace as $key => $arr) {
-            $data[] = "<b>File:</b> {$arr['file']}; <b>Line:</b> {$arr['line']}; <b>Func:</b> {$arr['class']}{$arr['type']}{$arr['function']}; <b>args:</b> " . json_encode($arr['args']);
+if (!function_exists('debugBacktrace')) {
+    /**
+     * 打印进程执行步骤
+     * @param null $thread 线程号
+     * @param bool $exit 是否退出
+     * @return void
+     */
+    function debugBacktrace($thread = null, $exit = false)
+    {
+        static $staticThread = null;
+        if ($thread && !isset($staticThread)) {
+            $staticThread = $thread;
+        } elseif ($thread === null || ($thread && $thread == $staticThread)) {
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 5);
+            $data = array();
+            foreach ($backtrace as $key => $arr) {
+                $data[] = "<b>File:</b> {$arr['file']}; <b>Line:</b> {$arr['line']}; <b>Func:</b> {$arr['class']}{$arr['type']}{$arr['function']}; <b>args:</b> " . json_encode($arr['args']);
+            }
+            echo '<pre>';
+            echo implode("\n", array_reverse($data));
+            $exit && exit;
         }
-        echo '<pre>';
-        echo implode("\n", array_reverse($data));
-        $exit && exit;
     }
 }
 
-/**
- * 重构print_r()方法，打印格式化的数组
- * @access public
- * @author jgb
- *
- * @param string | array  $vars 打印的变量
- * @param boolean $exit 是否退出
- * @return string
- */
-function rprint($vars = null, $exit = false)
-{
-    if (ini_get('html_errors')) {
-        $content = "<pre>\n";
-        $content .= htmlspecialchars(print_r($vars, true));
-        $content .= "\n</pre>\n";
-    } else {
-        $content = "\n";
-        $content .= print_r($vars, true) . "\n";
-    }
-    echo $content;
-    $exit && exit();
-}
-
-/**
- * 重构var_dump()方法，打印格式化的数组
- * @access public
- * @author jgb
- *
- * @param string | array  $vars 打印的变量
- * @param boolean $exit 是否退出
- * @return string
- */
-function rdump($vars = null, $exit = false)
-{
-    ob_start();
-    var_dump($vars);
-    $vars = ob_get_clean();
-    $vars = preg_replace("/\\]\\=\\>\\n(\\s+)/m", "] => ", $vars);
-    echo '<pre>' . $vars . '<pre>';
-    $exit && exit();
-}
-
-/**
- * 打印格式化的数组
- * @access public
- * @author jgb
- *
- * @param string | array  $vars 打印的变量
- * @param string $flag 打印标志
- * @param boolean $exit 是否退出
- * @return string
- */
-function dump($val = null, $flag = null, $exit = false)
-{
-    static $staticFlag = null;
-    if ($val === null && $flag !== null) {
-        $staticFlag = $flag;
-    } elseif ($staticFlag === $flag) {
-        rdump($val, $exit);
+if (!function_exists('dump')) {
+    /**
+     * 打印格式化的数组
+     * @access public
+     * @author jgb
+     * @param string | array  $var 打印的变量
+     * @param string $flag 打印标志
+     * @param boolean $exit 是否退出
+     * @return string
+     */
+    function dump($var = null, $flag = null, $exit = false)
+    {
+        static $staticFlag = null;
+        if ($var === null && $flag !== null) {
+            $staticFlag = $flag;
+        } elseif ($staticFlag === $flag) {
+            ob_start();
+            var_dump($var);
+            $vars = ob_get_clean();
+            $vars = preg_replace("/\\]\\=\\>\\n(\\s+)/m", "] => ", $vars);
+            echo '<pre>' . $vars . '<pre>';
+            $exit && exit();
+        }
     }
 }
 
-/**
- * 收集性能分析数据
- * @access public
- * @author jgb
- *
- * @return void
- */
-function saveXhprof($open = false) {
-    $xhprofData = xhprof_disable();// $xhprofData是数组形式的分析结果
+if (!function_exists('dump')) {
+    /**
+     * 收集性能分析数据
+     * @access public
+     * @author jgb
+     * @param bool $open
+     * @return void
+     */
+    function saveXhprof($open = false) {
+        $xhprofData = xhprof_disable();// $xhprofData是数组形式的分析结果
 
-    $xhprofPath = '/home/websites/xhprof/';
-    require $xhprofPath . 'xhprof_lib/utils/xhprof_lib.php';
-    require $xhprofPath . 'xhprof_lib/utils/xhprof_runs.php';
+        $xhprofPath = '/home/websites/xhprof/';
+        require $xhprofPath . 'xhprof_lib/utils/xhprof_lib.php';
+        require $xhprofPath . 'xhprof_lib/utils/xhprof_runs.php';
 
-    $xhprofRuns = new XHProfRuns_Default();
-    $runId = $xhprofRuns->save_run($xhprofData, 'xhprof');
-    if ($open === true) {
-        echo '<script type="text/javascript">window.open("http://xhprof.gb/index.php?run=' . $runId . '&source=xhprof");</script>';
+        $xhprofRuns = new XHProfRuns_Default();
+        $runId = $xhprofRuns->save_run($xhprofData, 'xhprof');
+        if ($open === true) {
+            echo '<script type="text/javascript">window.open("http://xhprof.gb/index.php?run=' . $runId . '&source=xhprof");</script>';
+        }
     }
 }
 

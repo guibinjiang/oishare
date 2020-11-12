@@ -15,8 +15,8 @@ class Controller extends \Core\Base\Controller
     {
         parent::__construct();
 
-        $this->requestManager = CoSingle::getInstance(RequestManager::class);
-        $this->responseManager = CoSingle::getInstance(ResponseManager::class);
+        $this->requestManager = _class(RequestManager::class);
+        $this->responseManager = _class(ResponseManager::class);
     }
 
     public function format($code, $msg, $result)

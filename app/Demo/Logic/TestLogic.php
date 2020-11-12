@@ -10,8 +10,7 @@ class TestLogic extends Logic
 {
     public function Test()
     {
-        /** @var $userModel UserModel */
-        $userModel = CoSingle::getInstance(UserModel::class);
+        $userModel = _model(UserModel::class);
         $list = $userModel->getConn()->getAll();
         return $list;
     }

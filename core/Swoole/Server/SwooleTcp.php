@@ -1,7 +1,6 @@
 <?php
 namespace Core\Swoole\Server;
 
-use Core\Base\CoSingle;
 use Core\Conf;
 use Core\Swoole\Route\RequestManager;
 use Core\Swoole\Route\ResponseManager;
@@ -45,11 +44,11 @@ class SwooleTcp extends SwooleBase
     public function onProcess($server, $fd, $from_id, $data)
     {
         //调用接口方法
-        $request  = CoSingle::getInstance(TcpRequestProxy::class, $data);
-        $response = CoSingle::getInstance(TcpResponseProxy::class, $server, $fd);
+        $request  = _class(TcpRequestProxy::class, $data);
+        $response = _class(TcpResponseProxy::class, $server, $fd);
 
-        $requestManager  = CoSingle::getInstance(RequestManager::class, $request);
-        $responseManager = CoSingle::getInstance(ResponseManager::class, $response);
+        $requestManager  = _class(RequestManager::class, $request);
+        $responseManager = _class(ResponseManager::class, $response);
 
         try {
             $route = new Route($requestManager, $responseManager);

@@ -2,7 +2,6 @@
 
 namespace Core\Factory;
 
-use Core\Base\CoSingle;
 use Core\BaseObject;
 use Core\Conf;
 use Core\Database\Connector\CoMysqlConnector;
@@ -32,6 +31,6 @@ class Factory
      */
     public static function register()
     {
-        return CoSingle::getInstance(Register::class);
+        return _class(Register::class);
     }
 }

@@ -5,4 +5,5 @@ require_once CORE_PATH . '/Loader.php';
 
 include ROOT_PATH . 'consts/Database.php';
 
-include ROOT_PATH . 'func/func.php';
+include ROOT_PATH . 'func/Func.php';
+include ROOT_PATH . 'core/Func.php';

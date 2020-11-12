@@ -2,7 +2,6 @@
 namespace Core\Swoole\Server;
 
 use Core\Conf;
-use Core\Base\CoSingle;
 use Core\Swoole\Route\RequestManager;
 use Core\Swoole\Route\ResponseManager;
 use Core\Swoole\Route\Route;
@@ -48,9 +47,9 @@ class SwooleHttp extends SwooleBase
         }
 
         /** @var $requestManager RequestManager */
-        $requestManager = CoSingle::getInstance(RequestManager::class, $request);
+        $requestManager = _class(RequestManager::class, $request);
         /** @var $responseManager ResponseManager */
-        $responseManager = CoSingle::getInstance(ResponseManager::class, $response);
+        $responseManager = _class(ResponseManager::class, $response);
 
         try {
             $route = new Route($requestManager, $responseManager);

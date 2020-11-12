@@ -44,7 +44,7 @@ class Route
             throw new \Exception('service not found:' . $serviceClass, 403);
         }
 
-        $this->application = CoSingle::getInstance($serviceClass);
+        $this->application = _class($serviceClass);
     }
 
     public function execute()
